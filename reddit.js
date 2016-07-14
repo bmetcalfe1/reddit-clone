@@ -1,5 +1,6 @@
 //const util = require('util');
 
+const imageToAscii = require("image-to-ascii");
 var inquirer = require('inquirer');
 var request = require('request');
 var prompt = require('prompt');
@@ -284,13 +285,20 @@ function redditLogic() {
                       function(answers) {
                         getPost(answers.postMenu, function(err, postResponse) {
                           if (err) {
-                            console.log(err.stack);
+                            console.log(err);
                           }
                           else {
                             postResponse[0].data.children.forEach(function(givenPost) {
+                              if (givenPost.data.url.indexOf('.png') >= 0 || givenPost.data.url.indexOf('.gif') >= 0 || givenPost.data.url.indexOf('.jpg') >= 0) {
+                                imageToAscii(givenPost.data.url, function(err, converted) {
+                                  console.log(err || converted); 
+                                });
+                              }
+                              else {
                               console.log("Title: " + givenPost.data.title);
                               console.log("URL: " + givenPost.data.url);
                               console.log("Username: " + givenPost.data.author);
+                              }
                             });
                           }
                         });
