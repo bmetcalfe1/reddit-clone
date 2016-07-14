@@ -300,6 +300,7 @@ function redditLogic() {
                               console.log("Username: " + givenPost.data.author);
                               }
                             });
+                          redditLogic();
                           }
                         });
                       }
