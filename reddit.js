@@ -299,19 +299,18 @@ function redditLogic() {
                             // make function. take data.children. check if in comments there are replies. 
                             // if replies exist make an object data.chisdren.replies. recall function.
                             
-                            // postResponse[1].data.children.forEach(function(givenPost) {
-                            //   console.log(wrap("Comment: " + givenPost.data.body)); 
-                            // });
-                            function commentLooper () {
-                            postResponse[1].data.children.forEach(function(givenPost) {
-                              if (givenPost.data.replies) {
-                                givenPost.data.replies.data.children.forEach(function(givenPost) {
-                                  console.log(wrap("Response: " + givenPost.data.body));
-                                });
-                              }
-                            });
+                            function commentLooper (arr) {
+                              
+                              arr.forEach(function(givenPost) {
+                                if (givenPost.data.body) {
+                                  console.log(wrap(givenPost.data.body)); 
+                                }
+                                else if (givenPost.data.replies) {
+                                 commentLooper(givenPost.data.replies.data.children);
+                                }
+                              });
                             } // commentlooper
-                            commentLooper();
+                            commentLooper(postResponse[1].data.children);
                           } // else
                         }); // get post
                       }
