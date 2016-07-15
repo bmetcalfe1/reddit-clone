@@ -296,9 +296,22 @@ function redditLogic() {
                                 });
                               }
                             });
+                            // make function. take data.children. check if in comments there are replies. 
+                            // if replies exist make an object data.chisdren.replies. recall function.
+                            
+                            // postResponse[1].data.children.forEach(function(givenPost) {
+                            //   console.log(wrap("Comment: " + givenPost.data.body)); 
+                            // });
+                            function commentLooper () {
                             postResponse[1].data.children.forEach(function(givenPost) {
-                              console.log(wrap("Comment: " + givenPost.data.body)); 
+                              if (givenPost.data.replies) {
+                                givenPost.data.replies.data.children.forEach(function(givenPost) {
+                                  console.log(wrap("Response: " + givenPost.data.body));
+                                });
+                              }
                             });
+                            } // commentlooper
+                            commentLooper();
                           } // else
                         }); // get post
                       }
